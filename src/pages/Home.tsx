@@ -15,6 +15,14 @@ const Home: React.FC = () => {
       alert("inputkan semua data");
       return;
     }
+
+    if (banyak > 30) {
+      alert("Maksimal soal adalah 30");
+      setBanyak(30);
+      return;
+    }
+
+    
     setLoading(true);
     try {
       const questions: Question[] = await generateQuestions(banyak, kategori, tingkat);
@@ -36,11 +44,15 @@ const Home: React.FC = () => {
         <label className="block mb-4">
           <span className="font-medium text-gray-700">Banyak Soal</span>
           <input
-            type="text"
+            type="number"
+            min={1}
+            max={30}
             className="w-full border border-gray-300 rounded-xl p-3 mt-1 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
             placeholder={banyak.toString()}
+            value={banyak > 30 ? 30 : banyak}
             onChange={(e) => setBanyak(Number(e.target.value))}
           />
+          <p className="text-sm text-gray-500 mt-1">Maksimal 30 soal</p>
         </label>
 
         <label className="block mb-4">
