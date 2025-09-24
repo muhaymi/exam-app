@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Game Memory Buah & Sayur</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    #menu, #game {
+      display: none;
+    }
+
+    .menu-card {
+      background: rgb(2, 123, 31);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      padding: 2px;
+      margin: 100px auto;
+      font-size: 12px;
+      height: min-content;
+      width: max-content;
+      text-align: center;
+      
+    }
+
+    .menu-card2 {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      background: rgb(2, 123, 31);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      padding: 5px;
+      margin: 2px;
+      font-size: 12px;
+      height: min-content;
+      width: max-content;  
+      }
+
+    .menu-buttons input,
+    .menu-buttons button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu-buttons button:hover {
+      background-color: #34d399;
+      color: white;
+    }
+
+    #board {
+      display: grid;
+      gap: 12px;
+      justify-content: center;
+      margin: 5px auto;
+      max-width: 600px;
+    }
+
+    .card {
+      width: 50px;
+      height: 50px;
+      background: #10b981;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      font-size: 10px;
+      line-height: 40px;
+      text-align: center;
+      color: transparent;
+      transform-style: preserve-3d;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.1);
+    }
+
+    .card.flipped, .card.matched {
+      background-color: #fefce8;
+      color: #000;
+      animation: bounce 0.4s;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    button {
+      background-color: #065b3f;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 1em;
+    }
+
+    button:hover {
+      background-color: #059669;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .card { font-size: 1.5rem; }
+    #board { gap: 6px; }
+  </style>
+</head>
+
+<body>
+
+  <!-- MENU -->
+  <div id="menu">
+    <div class="menu-card">
+      <h2>Menu</h2>
+      <div class="menu-buttons">
+        <label for="levelInput">Masukkan jumlah level:</label><br>
+        <input type="number" id="levelInput" min="1" value="1" style="width: 50px;"><br>
+        <button onclick="startGame()">Mulai</button>
+        <button onclick="showPopupAbout()">Tentang</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="game">
+    <div class="menu-card2">
+      <button onclick="backToMenu()" title="Kembali ke Menu" style="color: #fff; cursor: pointer;">⬅</button>
+      <h4 id="score"></h4>
+      <h4 id="timer">00:00</h4>
+    </div>
+
+    <div id="board"></div>
+  </div>
+
+  <!-- POPUP Level Selesai -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <div id="popup-text"></div>
+      <button onclick="nextLevel()">Lanjut ke Level Berikutnya</button>
+    </div>
+  </div>
+
+  <!-- POPUP Tentang -->
+  <div class="popup" id="popup-about">
+    <div class="popup-content">
+      <h2>Tentang Game</h2>
+      <p>
+        Game memory untuk mengenal buah dan sayur sambil bermain! 🍎🍌🥭🍊🍉🍈🍍🍇🥦🥔
+      </p>
+      <button onclick="document.getElementById('popup-about').style.display='none'">Tutup</button>
+    </div>
+  </div>
+
+  <!-- POPUP Menang -->
+  <div class="popup" id="popup-win">
+    <div class="popup-content">
+      <p>Selamat! Kamu telah menyelesaikan semua level 🎉</p>
+      <button onclick="closePopup()">Tutup</button>
+    </div>
+  </div>
+
+  <!-- POPUP Waktu Habis -->
+  <div class="popup" id="popup-t">
+    <div class="popup-content">
+      <p>Waktu Habis!!!</p>
+      <button onclick="closePopup()">Tutup</button>
+    </div>
+  </div>
+
+  <!-- AUDIO -->
+  <audio id="flipSound" src="click.mp3"></audio>
+  <audio id="matchSound" src="match.mp3"></audio>
+  <audio id="winSound" src="success.mp3"></audio>
+  <audio id="wn" src="win.mp3"></audio>
+  <audio id="end" src="end.mp3"></audio>
+
+  <script>
+    const items = [ /* daftar buah & sayur (tidak diubah) */ 
+      { name: "Apel", img: "🍎", info: "Apel kaya akan serat dan vitamin C." },
+      { name: "Pisang", img: "🍌", info: "Pisang sumber kalium yang baik." },
+      { name: "Mangga", img: "🥭", info: "Mangga mengandung vitamin A." },
+      { name: "Jeruk", img: "🍊", info: "Jeruk sumber vitamin C terbaik." },
+      { name: "Pepaya", img: "🧡", info: "Pepaya membantu pencernaan." },
+      { name: "Semangka", img: "🍉", info: "Semangka menyegarkan dan banyak air." },
+      { name: "Melon", img: "🍈", info: "Melon segar dan kaya vitamin." },
+      { name: "Nanas", img: "🍍", info: "Nanas mengandung enzim bromelain." },
+      { name: "Jambu Biji", img: "🟢", info: "Jambu biji kaya vitamin C." },
+      { name: "Anggur", img: "🍇", info: "Anggur mengandung antioksidan." },
+      { name: "Salak", img: "🌰", info: "Salak kaya serat dan antioksidan." },
+      { name: "Alpukat", img: "🥑", info: "Alpukat mengandung lemak sehat." },
+      { name: "Kelapa", img: "🥥", info: "Kelapa mengandung elektrolit." },
+      { name: "Mentimun", img: "🥒", info: "Mentimun menyegarkan dan rendah kalori." },
+      { name: "Buncis", img: "🫛", info: "Buncis kaya protein nabati." },
+      { name: "Kubis", img: "🥬", info: "Kubis rendah kalori dan kaya vitamin K." },
+      { name: "Brokoli", img: "🥦", info: "Brokoli tinggi serat dan vitamin C." },
+      { name: "Bawang Putih", img: "🧄", info: "Bawang putih bersifat antibakteri." },
+      { name: "Lobak", img: "🥕", info: "Lobak membantu pencernaan." },
+      { name: "Jagung", img: "🌽", info: "Jagung kaya serat dan karbohidrat." },
+      { name: "Cabai", img: "🌶", info: "Cabai mengandung capsaicin." },
+      { name: "Kentang", img: "🥔", info: "Kentang sumber energi." }
+    ];
+
+    let level = 1, maxLevel = 1, score = 0;
+    let firstCard = null, lockBoard = false;
+    let countdown;
+
+    const flipSound = document.getElementById("flipSound");
+    const matchSound = document.getElementById("matchSound");
+    const winSound = document.getElementById("winSound");
+    const end = document.getElementById("end");
+    const wn = document.getElementById("wn");
+
+    function showPopupAbout() {
+      document.getElementById("popup-about").style.display = "flex";
+    }
+
+    function backToMenu() {
+      clearInterval(countdown);
+      document.getElementById("timer").innerHTML = "00:00";
+      document.getElementById("game").style.display = "none";
+      document.getElementById("menu").style.display = "block";
+      score = 0; level = 1;
+      document.getElementById("levelInput").value = maxLevel;
+    }
+
+    function startGame() {
+      maxLevel = parseInt(document.getElementById("levelInput").value) || 1;
+      level = 1; score = 0;
+      document.getElementById("menu").style.display = "none";
+      document.getElementById("game").style.display = "block";
+      createBoard();
+    }
+
+    function createBoard() {
+      const board = document.getElementById("board");
+      board.innerHTML = "";
+
+      const gridSize = level + 1;
+      tm(level * 30);
+
+      const numPairs = (gridSize * gridSize) / 2;
+      const totalCards = numPairs * 2;
+      const maxRows = 4;
+      const columns = Math.ceil(totalCards / maxRows);
+      board.style.gridTemplateColumns = `repeat(${columns}, 80px)`;
+
+      let selectedItems = items.sort(() => 0.5 - Math.random()).slice(0, numPairs);
+      let pairs = [...selectedItems, ...selectedItems].sort(() => Math.random() - 0.5);
+
+      pairs.forEach((item, idx) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.name = item.name;
+        card.dataset.index = idx;
+        card.textContent = "";
+
+        card.addEventListener("click", () => {
+          if (lockBoard || card.classList.contains("flipped") || card.classList.contains("matched")) return;
+
+          card.classList.add("flipped");
+          card.textContent = item.img;
+          flipSound.currentTime = 0; flipSound.play();
+
+          if (!firstCard) {
+            firstCard = card;
+          } else {
+            lockBoard = true;
+            if (firstCard.dataset.name === card.dataset.name && firstCard.dataset.index !== card.dataset.index) {
+              firstCard.classList.add("matched");
+              card.classList.add("matched");
+              matchSound.currentTime = 0; matchSound.play();
+              score++; updateScore();
+              if (document.querySelectorAll(".matched").length === pairs.length) {
+                clearInterval(countdown); // ✅ hentikan timer saat menang
+                setTimeout(() => showPopup(item), 600);
+              }
+              resetTurn();
+            } else {
+              setTimeout(() => {
+                firstCard.classList.remove("flipped");
+                card.classList.remove("flipped");
+                firstCard.textContent = "";
+                card.textContent = "";
+                resetTurn();
+              }, 800);
+            }
+          }
+        });
+
+        board.appendChild(card);
+      });
+
+      updateScore();
+    }
+
+    function updateScore() {
+      document.getElementById("score").innerText = `Skor: ${score} | Level: ${level} / ${maxLevel}`;
+    }
+
+    function resetTurn() {
+      [firstCard, lockBoard] = [null, false];
+    }
+
+    function showPopup(item) {
+      winSound.currentTime = 0; winSound.play();
+      document.getElementById("popup-text").innerHTML = `
+        <h2 style="margin-top: 0; text-align: left;">${item.name}</h2>
+        <p style="text-align: left;">${item.info}</p>
+      `;
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function nextLevel() {
+      document.getElementById("popup").style.display = "none";
+      if (level < maxLevel) {
+        level++;
+        createBoard();
+      } else {
+        clearInterval(countdown);
+        wn.currentTime = 0; wn.play();
+        document.getElementById("popup-win").style.display = "flex";
+        backToMenu();
+      }
+    }
+
+    function closePopup() {
+      document.getElementById("popup-win").style.display = "none";
+      document.getElementById("popup-t").style.display = "none";
+    }
+
+    function tm(x) {
+      clearInterval(countdown);
+      let timeLeft = x;
+      countdown = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").innerHTML = timeLeft + " detik";
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          document.getElementById("timer").innerHTML = "Waktu Habis!";
+          document.getElementById("popup-t").style.display = "flex";
+          end.currentTime = 0; end.play();
+          backToMenu();
+        }
+      }, 1000);
+    }
+
+    document.getElementById("menu").style.display = "block";
+  </script>
+</body>
+</html>
