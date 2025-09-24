@@ -1,5 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Card from "../components/Card";
 
 const Result: React.FC = () => {
   const location = useLocation();
@@ -7,25 +9,32 @@ const Result: React.FC = () => {
   const { score, total } = location.state as { score: number; total: number };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-200 p-4">
-      <div className="bg-white/90 backdrop-blur-sm shadow-xl rounded-2xl p-10 w-full max-w-md text-center">
-        <h1 className="text-3xl font-bold text-emerald-700 mb-4">🎉 Hasil Ujian</h1>
-        <p className="text-lg text-gray-700 mb-6">
-          Skor kamu:{" "}
-          <span className="font-semibold text-2xl text-emerald-600">
-            {score}
-          </span>{" "}
-          / {total}
-        </p>
+    <DashboardLayout>
+      <h1 className="text-3xl font-bold mb-6">📊 Hasil Latihan</h1>
 
-        <button
-          className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-200 shadow-md"
-          onClick={() => navigate("/")}
-        >
-          Ulangi Ujian
-        </button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Card Skor */}
+        <Card title="Skor Kamu">
+          <p className="text-lg text-gray-700">
+            Skor akhir:{" "}
+            <span className="font-semibold text-2xl text-emerald-600">
+              {score}
+            </span>{" "}
+            / {total}
+          </p>
+        </Card>
+
+        {/* Card Aksi */}
+        <Card title="Aksi Selanjutnya">
+          <button
+            className="w-full bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-200 shadow-md"
+            onClick={() => navigate("/generate")}
+          >
+            🔁 Latihan Lagi
+          </button>
+        </Card>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
