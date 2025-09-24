@@ -54,7 +54,7 @@ const GameWrapper: React.FC = () => {
                 {/* iframe game */}
                 <iframe
                     ref={iframeRef}
-                    src="/game/game.html"
+                    src={`${import.meta.env.BASE_URL}game/game.html`}
                     title="Flip Card Game"
                     className="w-full flex-1 border-0 rounded-xl shadow-lg"
                 />

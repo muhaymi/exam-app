@@ -53,7 +53,7 @@ const DashboardPage = () => {
                         {/* Tombol utama */}
                         <button
                             title="Mulai"
-                            onClick={() => navigate("/game1")}>
+                            onClick={() => navigate("/game")}>
                             <Play className="w-8 h-8 p-1 rounded-full hover:bg-purple-200 transition flex items-center justify-center shadow-md" />
 
                         </button>

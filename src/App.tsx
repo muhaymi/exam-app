@@ -21,7 +21,7 @@ export default function App() {
           <Route path="/result" element={<Result />} />
           <Route path="/history" element={<History />} />
           <Route path="/generate" element={<GenerateExam />} />
-          <Route path="/game1" element={<GameWrapper />} />
+          <Route path="/game" element={<GameWrapper />} />
         </Routes>
       </BrowserRouter>
     </ExamProvider>
