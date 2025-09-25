@@ -15,27 +15,33 @@ export interface Question {
 export const generateQuestions = async (
   banyak: number,
   kategori: string,
-  tingkat: string
+  tingkat: string,
+  kelas: string,
 ): Promise<Question[]> => {
   const prompt = `
-  Buatkan ${banyak} soal ujian gunakan bahasa indonesia dengan ketentuan:
-  - Kategori: ${kategori}
-  - diperuntukan untuk pengetahuan: ${tingkat}
-  - sesuaikan dengan kurikulum sekolah di Indonesia
-  - Jenis soal pilihan ganda
-  - Sertakan 4 opsi jawaban
-  - Sertakan kunci jawaban
-  - Sertakan pembahasan singkat
+    Buatkan ${banyak} soal ujian dalam bahasa Indonesia dengan ketentuan berikut:
+    - Materi: ${kategori}
+    - Tingkat pengetahuan: kelas ${kelas} ${tingkat} 
+    - Sesuai dengan kurikulum sekolah di Indonesia diatas 2023
+    - Jenis soal: Pilihan ganda
+    - Setiap soal harus memiliki 4 opsi jawaban (A, B, C, D)
+    - Sertakan kunci jawaban yang benar
+    - Sertakan pembahasan singkat untuk setiap soal
+    - Format output **JSON VALID** tanpa teks tambahan, contoh format:
 
-  Format output JSON VALID tanpa teks tambahan:
-  [
-    {
-      "soal": "Teks soal",
-      "opsi": ["A", "B", "C", "D"],
-      "jawaban": "Jawaban benar",
-      "pembahasan": "Penjelasan singkat"
-    }
-  ]
+    [
+      {
+        "soal": "Teks soal di sini",
+        "opsi": ["Jawaban A", "Jawaban B", "Jawaban C", "Jawaban D"],
+        "jawaban": "Jawaban yang benar",
+        "pembahasan": "Penjelasan singkat mengenai jawaban"
+      }
+    ]
+
+    Pastikan:
+    1. JSON yang dihasilkan benar-benar valid (bisa langsung di-parse).
+    2. Tidak ada teks, catatan, atau komentar lain di luar array JSON.
+    3. Semua soal relevan dengan materi dan tingkat yang ditentukan.
   `;
 
   try {

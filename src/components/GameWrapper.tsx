@@ -1,5 +1,7 @@
-import React, {  useRef  } from "react";
+import React, { useRef } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
+// import { useState,useEffect } from "react";
+
 
 const GameWrapper: React.FC = () => {
     // const [isLandscape, setIsLandscape] = useState(true);
@@ -44,11 +46,10 @@ const GameWrapper: React.FC = () => {
                     <h2 className="text-lg font-bold">🎮 Flip Card</h2>
                     <button
                         onClick={enterFullscreen}
-                        className="px-4 py-1 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
-                    >
+                        className="px-4 py-1 bg-amber-700 text-white rounded-lg shadow hover:bg-amber-600 transition -skew-x-12 ">
                         ⛶ Fullscreen
                     </button>
-                    
+
                 </div>
 
                 {/* iframe game */}

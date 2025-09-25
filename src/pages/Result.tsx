@@ -27,7 +27,7 @@ const Result: React.FC = () => {
         {/* Card Aksi */}
         <Card title="Aksi Selanjutnya">
           <button
-            className="w-full bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-200 shadow-md"
+            className="w-full bg-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-amber-700 transition-all duration-200 shadow-md"
             onClick={() => navigate("/generate")}
           >
             🔁 Latihan Lagi

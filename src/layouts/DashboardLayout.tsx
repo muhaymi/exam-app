@@ -24,7 +24,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-green-700 text-white flex items-center justify-between px-4 py-3 shadow-md">
+      <header className="bg-orange-700 text-white flex items-center justify-between px-4 py-3 shadow-md">
         <div className="flex items-center space-x-4">
           {/* Burger Button */}
           <button
@@ -53,12 +53,15 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
               )}
             </svg>
           </button>
-          <h1 className="text-lg font-bold tracking-wide">📘 EduApp</h1>
+          <h1 className="text-black bg-orange-200 px-2 py-2 inline-block font-bold tracking-wide shadow-sm transform -skew-x-12 rounded-lg underline">
+            🕷 Belajar
+          </h1>
+
         </div>
         <div className="flex items-center space-x-4">
           <span className="text-sm">Hi, User</span>
           <img
-            src="https://ui-avatars.com/api/?name=User"
+            src="/ic.png"
             alt="avatar"
             className="w-8 h-8 rounded-full border"
           />
@@ -76,16 +79,15 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
 
         {/* Sidebar */}
         <aside
-          className={`bg-green-800 text-white transition-all duration-300 flex flex-col z-40
+          className={`bg-orange-800 text-white transition-all duration-300 flex flex-col z-40
             ${isMobile ? "fixed top-0 left-0 h-full w-64 transform" : ""}
             ${sidebarOpen ? "translate-x-0 w-64" : isMobile ? "-translate-x-full w-64" : "w-0"}
           `}
         >
           {/* Sidebar header (opsional) */}
           <div
-            className={`${
-              sidebarOpen ? "p-6 border-b border-green-600 font-semibold text-xl" : "hidden"
-            }`}
+            className={`${sidebarOpen ? "p-6 border-b border-orange-600 font-semibold text-xl" : "hidden"
+              }`}
           >
             Menu
           </div>
@@ -93,7 +95,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
             {sidebarOpen && <Sidebar />}
           </div>
           {sidebarOpen && (
-            <div className="p-4 border-t border-green-600 text-sm">© 2025 EduApp</div>
+            <div className="p-4 border-t border-orange-600 text-sm">© 2025 EduApp</div>
           )}
         </aside>
 

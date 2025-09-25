@@ -93,7 +93,7 @@ const Exam: React.FC = () => {
               <div
                 className={`mt-3 p-3 rounded-xl font-semibold transition-all duration-300 ${
                   feedback[idx] === "benar"
-                    ? "bg-green-100 text-green-700"
+                    ? "bg-amber-100 text-amber-700"
                     : "bg-red-100 text-red-700"
                 }`}
               >
@@ -115,7 +115,7 @@ const Exam: React.FC = () => {
             ${
               answers.some((a) => a === "")
                 ? "bg-gray-400 cursor-not-allowed text-white"
-                : "bg-green-600 hover:bg-green-700 text-white"
+                : "bg-amber-600 hover:bg-amber-700 text-white"
             }`}
         >
           Selesai Tes

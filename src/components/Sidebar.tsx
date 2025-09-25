@@ -16,8 +16,8 @@ const Sidebar = () => {
                         to={link.to}
                         className={({ isActive }) =>
                             `block px-3 py-2 rounded-lg transition ${isActive
-                                ? "bg-green-600 text-white font-semibold"
-                                : "text-green-100 hover:bg-green-500"
+                                ? "bg-orange-800 text-white font-semibold"
+                                : "text-amber-100 hover:bg-orange-700"
                             }`
                         }
                     >

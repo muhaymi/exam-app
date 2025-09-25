@@ -21,7 +21,7 @@
     }
 
     .menu-card {
-      background: rgb(2, 123, 31);
+      background: rgb(123, 73, 2);
       color: white;
       border-radius: 8px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
@@ -38,7 +38,7 @@
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      background: rgb(2, 123, 31);
+      background: rgb(123, 73, 2);
       color: white;
       border-radius: 8px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
@@ -60,7 +60,7 @@
     }
 
     .menu-buttons button:hover {
-      background-color: #34d399;
+      background-color: #e68a3f;
       color: white;
     }
 
@@ -73,9 +73,9 @@
     }
 
     .card {
-      width: 50px;
-      height: 50px;
-      background: #10b981;
+      width: 40px;
+      height: 40px;
+      background: #e68a3f;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       cursor: pointer;
@@ -124,7 +124,7 @@
     }
 
     button {
-      background-color: #065b3f;
+      background-color: #712e04;
       color: white;
       padding: 8px 16px;
       border: none;
@@ -135,7 +135,7 @@
     }
 
     button:hover {
-      background-color: #059669;
+      background-color: #712e04;
     }
 
     @keyframes fadeIn {
@@ -277,8 +277,9 @@
       const board = document.getElementById("board");
       board.innerHTML = "";
 
-      const gridSize = level + 1;
-      tm(level * 30);
+      const effectiveLevel = level > 5 ? 5 : level;
+      const gridSize = effectiveLevel + 1;
+      tm(effectiveLevel * 30);
 
       const numPairs = (gridSize * gridSize) / 2;
       const totalCards = numPairs * 2;
